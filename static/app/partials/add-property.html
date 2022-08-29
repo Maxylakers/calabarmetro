@@ -1,0 +1,110 @@
+<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+	class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+
+<div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+	<h1 class="text-center">Enter Property Data</h1>
+	<div class="alert alert-danger"
+		 ng-show="add_property_error" role="alert">{{add_property_error}}
+	</div>
+	<div class="property-editor panel panel-default">
+		<div class="panel-body">
+			<form action="/properties" enctype='multipart/form-data'>
+
+				<div id="drag-drop-area" class="DashboardContainer"></div>
+				<div class="form-group mt-4">
+					<select class="form-control" id="propertytype" name="propertytype"
+							ng-model="new_property.type" required="">
+						<option value="" selected="">Choose Property Type</option>
+						<option ng-repeat="type in propertyTypes" ng-value="type">{{ type }}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<input type="number" placeholder="Property Price"
+						   ng-model="new_property.price" class="form-control" style="width:100%"
+						   required/>
+					<span class="mt-2 mb-2" style="display: block;">{{formatNaira(new_property.price || 0)}}</span>
+				</div>
+				<div class="form-group">
+					<select class="form-control" ng-model="new_property.city">
+						<option value="" selected="">Choose City</option>
+						<option ng-repeat="(city, locations) in propertyLocations" ng-value="city">{{ city }}</option>
+					</select>
+					<small class="mt-2 mb-2" style="display: block;">e.g Calabar</small>
+				</div>
+
+				<div class="form-group">
+					<select ng-disabled="!new_property.city" class="form-control" ng-model="new_property.location">
+						<option value="" selected="">Choose Location</option>
+						<option ng-repeat="location in propertyLocations[new_property.city].sort()" ng-value="location">{{ location }}</option>
+					</select>
+					<small class="mt-2 mb-2" style="display: block;">e.g {{ new_property.city && propertyLocations[new_property.city][0] || "Calabar" }}</small>
+				</div>
+
+				<div class="form-group">
+					<input type="text" ng-model="new_property.address" placeholder="Enter Address"
+						   class="form-control" style="width:100%"/>
+					<small class="mt-2 mb-2" style="display: block;">e.g 555 African street, Nigeria.</small>
+				</div>
+
+				<div class="form-group">
+					<input type="text" placeholder="Enter Telephone number" size="15"
+						   class="form-control" ng-model="new_property.contact" style="width:100%"
+						   required="">
+					<small class="mt-2 mb-2" style="display: block;">e.g 080..., +23480...</small>
+				</div>
+
+				<div class="form-group">
+					<textarea type="text" ng-model="new_property.description"
+							  placeholder="Description..." class="form-control" rows="5"
+							  style="width: 100%"></textarea>
+					<small class="mt-2 mb-2" style="display: block;">e.g Furnished two bedroom flat with...</small>
+				</div>
+
+				<div class="form-group">
+					<label for="for-sale">
+						<input type="radio" id="for-sale" ng-model="new_property.forSale" value="1">
+						<span class="ml-1">For Sale</span>
+					</label>
+					<label class="ml-3" for="for-rent">
+						<input type="radio" id="for-rent" ng-model="new_property.forSale" value="0">
+						<span class="ml-1">For Rent</span>
+					</label>
+				</div>
+
+				<button id="add-property" data-loading-text="Creating Property..." ng-click="addProperty()" type="button" class="btn btn-primary">
+					<span class="glyphicon glyphicon-upload"></span> Create Property
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Small modal -->
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+	 aria-labelledby="mySmallModalLabel" id="addproperty">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p>Operation Status</p>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<p>Property has been successfully added</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<a class="btn btn-primary" ng-click="viewProperty()">View Property</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.uppy-Dashboard-poweredBy {
+		display: none !important;
+	}
+</style>

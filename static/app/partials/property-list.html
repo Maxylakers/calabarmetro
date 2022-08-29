@@ -1,0 +1,108 @@
+<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+
+<div class="container mb-4">
+	<div class="col-xs-12 col-sm-12 text-center">
+		<a ng-href="/properties/new" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add New Property</a>
+	</div>
+</div>
+
+<!-- Search engine -->
+<div class="container">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="well well-sm">
+				<div class="text-center">
+
+				    <div class="col-sm-2 col-sm-offset-1">
+						<div class="form-group">
+							<select class="form-control" ng-model="search.type" title="" ng-disabled="!finished_loading">
+								   <option value="" selected="">Choose Type</option>
+								<option ng-repeat="type in propertyTypes" ng-value="type">{{ type }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<select class="form-control" ng-model="search.city" title="" ng-disabled="!finished_loading">
+								   <option value="" selected="">Choose City</option>
+								<option ng-repeat="(city, locations) in propertyLocations" ng-value="city">{{ city }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<select ng-disabled="!(search.city && finished_loading)" class="form-control" ng-model="search.location" title="">
+								<option value="" selected>Choose Location</option>
+								<option ng-repeat="location in propertyLocations[search.city].sort()" ng-value="location">{{ location }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<select class="form-control" ng-model="search.price" title="" ng-disabled="!finished_loading">
+								<option value="" selected="">Choose Price Range</option>
+								<option ng-repeat="priceRange in priceRanges" ng-value="priceRange.value">{{ priceRange.text }}</option>
+							</select>
+						</div>
+					</div>
+			    </div>
+				 <button class="btn btn-primary search-button" ng-click="getProperties()" ng-disabled="!finished_loading">
+					 <span class="glyphicon glyphicon-search" type="button"></span>
+					 <strong>Search</strong>
+				 </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ng-show="!finished_loading">
+	<h4>loading ...please wait a moment</h4>
+</div>
+
+<div ng-if="isSearch && (properties.length === 0)" class="text-center">
+	No results found for your search query
+</div>
+
+<div ng-if="!isSearch && finished_loading && (properties.length === 0)" class="text-center">
+	No properties at the moment, kindly check back later.
+</div>
+
+<div ng-if="properties.length" ng-repeat="property in properties" class="col-sm-3 col-xs-6">
+	<a ng-href="/properties/{{property._id}}" class="panel panel-default property-link" title="View property">
+		<div class="panel-heading image-wrapper">
+			<img style="max-width:100%; width:100%" ng-src="{{property.src}}">
+			<div class="overlay"></div>
+		</div>
+		<div class="panel-body">
+			<p class="single-line mb-2"><strong>{{property.type}}</strong></p>
+			<p class="single-line mb-2"><strong>{{formatNaira(property.price)}}</strong></p>
+			<p class="single-line mb-2"><span class="glyphicon glyphicon-globe"></span> <strong>{{property.city}}</strong></p>
+			<p class="single-line mb-0"><span class="glyphicon glyphicon-map-marker "></span> <strong>{{property.location}}</strong></p>
+		</div>
+		<div class="panel-footer">
+			<span class="ml-2"><span class="badge"> {{property.viewCount}}</span> <span class="label label-primary">Views</span> </span>
+		</div>
+	</a>
+</div>
+<div style="clear: left"></div>
+
+<nav ng-if="total > limit" aria-label="Page navigation" class="text-center mt-5">
+	<ul class="pagination">
+		<li>
+			<a ng-if="page > 1" ng-click="getProperties(limit, page-1)" aria-label="Previous">
+				<span aria-hidden="true">&laquo; Previous</span>
+			</a>
+			<span ng-if="page === 1" aria-hidden="true">&laquo; Previous</span>
+		</li>
+		<li ng-class="{active: page === $index+1}" ng-repeat="p in all">
+			<a ng-if="page !== $index+1" ng-click="getProperties(limit, $index+1)">{{p+1}}</a>
+			<a ng-if="page === $index+1">{{p+1}} <span class="sr-only">(current)</span></a>
+		</li>
+		<li>
+			<a ng-if="page < pages" ng-click="getProperties(limit, page+1)" aria-label="Next">
+				<span aria-hidden="true">Next &raquo;</span>
+			</a>
+			<span ng-if="page === pages" aria-hidden="true">Next &raquo;</span>
+		</li>
+	</ul>
+</nav>

@@ -1,0 +1,11 @@
+/node_modules/
+/data/
+/dist/
+/server/sessions/*
+/server/static/img/uploads/property_images/*
+/static/img/uploads/property_images/*
+.idea/
+.env
+!/server/sessions/.gitkeep
+!/server/static/img/uploads/property_images/.gitkeep
+!/static/img/uploads/property_images/.gitkeep

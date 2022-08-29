@@ -1,0 +1,29 @@
+<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+	class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+<br>
+<br>
+<h3>List of Feedbacks</h3>
+<table class="table table-responsive">
+	<thead class="thead-dark">
+	<tr>
+		<th scope="col">#</th>
+		<th scope="col">Name</th>
+		<th scope="col" class="hidden-xs">Title</th>
+		<th scope="col" class="hidden-xs">Email</th>
+		<th scope="col">Actions</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="feedback in feedbacks">
+		<th scope="row">{{$index+1}}</th>
+		<td>{{feedback.name}}</td>
+		<td class="hidden-xs">{{feedback.title}}</td>
+		<td class="hidden-xs">{{feedback.email}}</td>
+		<td>
+      <a href ng-href="/my-account/head/feedbacks/{{feedback._id}}" class="btn btn-info btn-sm">
+        View
+      </a>
+		</td>
+	</tr>
+	</tbody>
+</table>

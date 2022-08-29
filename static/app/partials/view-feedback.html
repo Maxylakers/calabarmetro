@@ -1,0 +1,49 @@
+<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+	class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+
+<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+<div ng-show="!finished_loading"><h4 style="=" color: #aaaaaa>
+	loading ...please wait a moment</h4></div>
+<div ng-show="finished_loading">
+
+	<div class="page-header">
+		{{feedback.name}} <br>
+		<span class='smaller lighter'></span>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			{{feedback.title}}
+		</div>
+
+		<div class="panel-body">
+			<p>Contact: {{feedback.contact}} </p>
+			<p>Email: {{feedback.email}} </p>
+			<p>Date: {{feedback.createdAt | date : "MM/dd/yyyy 'at' h:mma"}} </p>
+			<hr>
+			<p> Message: {{feedback.message}} </p>
+		</div>
+	</div>
+	<a href="mailto:{{feedback.email}} " type="button" class="btn btn-primary" ng-if="user.role === 0">Reply</a>
+
+	<button type="button" class="btn btn-danger" ng-click="delete(feedback._id)" ng-if="user.role === 0"><span class="glyphicon glyphicon-trash"></span></button>
+
+	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+		 aria-labelledby="mySmallModalLabel" id="deletefeedback">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p>Operation Status</p>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
+				</div>
+				<div class="modal-body">
+					<p>Feedback deleted successfully</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>

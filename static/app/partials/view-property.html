@@ -1,0 +1,193 @@
+<div class="container">
+	<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+		class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+	<br>
+	<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+	<div ng-show="!finished_loading"><h4 style="color: #aaaaaa">
+		loading ...please wait a moment</h4></div>
+	<div ng-show="finished_loading">
+
+		<div class="page-header">
+			<h3>
+				<span class="label label-warning">{{property.type}}</span>
+				<span class="label label-warning">{{formatNaira(property.price)}}</span>
+				<span class="label label-success" ng-if="property.forSale">For Sale</span></h3>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading" style="text-align:center">
+				<img class="m-2 img-rounded" ng-src="{{ property.src }}">
+				<img ng-repeat="imageSrc in property.gallery" class="m-2 img-rounded" ng-src="{{ imageSrc }}">
+			</div>
+
+			<div class="panel-body">
+				<p><span class="mr-3 glyphicon glyphicon-globe"></span> <strong>City:</strong> {{property.city}}</p>
+				<p><span class="mr-3 glyphicon glyphicon-map-marker"></span> <strong>Location:</strong> {{property.location}}</p>
+				<p><span class="mr-3 glyphicon glyphicon-pushpin"></span> <strong>Address:</strong> {{property.address}}</p>
+				<p><span class="mr-3 glyphicon glyphicon-info-sign"></span> <strong>Description:</strong> {{property.description}}</p>
+				<p><span class="mr-3 glyphicon glyphicon-calendar"></span> <strong>Date Added:</strong> {{property.createdAt | date}}</p>
+				<p><span class="label label-info">Views</span> <span class="badge"> {{property.viewCount}}</span></p>
+				<div ng-if="user && property.isMine">
+					<p><span class="label label-info">Contact count</span> <span class="badge"> {{property.contactCount}}</span></p>
+					<p><span class="label label-info">Favourites count</span> <span class="badge"> {{property.favouriteCount}}</span></p>
+				</div>
+				<p ng-if="!user"><a ng-href="/login">Sign in</a> to view complete details</p>
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<ins class="adsbygoogle"
+							style="display:block; text-align:center;"
+							data-ad-layout="in-article"
+							data-ad-format="fluid"
+							data-ad-client="ca-pub-0722828848829646"
+							data-ad-slot="8034959114"></ins>
+					<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+			</div>
+			<div class="panel-footer">
+				<button ng-if="user" type="button" class="btn btn-primary btn-sm m-1" ng-click="addFavourite(property._id)"><span
+					class="glyphicon glyphicon-circle-arrow-down"></span> Add to Favourite
+				</button>
+				<button ng-if="user" type="button" ng-click="!property.isMine && contactOwner(property._id)" class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#viewcontact"><span class="glyphicon glyphicon-earphone"></span> Contact
+					Handler
+				</button>
+				<button ng-if="!user" type="button" class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#viewcontact"><span class="glyphicon glyphicon-earphone"></span> Contact
+					Handler
+				</button>
+				<button type="button" class="btn btn-danger btn-sm m-1" ng-click="removeFeatured(property.featuredId)"
+						ng-if="user.role === 0 && (property.isFeatured === true)">Remove from featured
+				</button>
+				<button type="button" class="btn btn-success btn-sm m-1" ng-click="addFeatured(property._id)"
+						ng-if="user.role === 0 && !property.isFeatured">Add to featured
+				</button>
+				<button type="button" class="btn btn-danger btn-sm m-1" ng-click="delete(property._id)" ng-if="(user.role === 0) || property.isMine"><span
+					class="glyphicon glyphicon-trash"></span></button>
+			</div>
+		</div>
+
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+			 aria-labelledby="mySmallModalLabel" id="viewcontact">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p>Handler's Information</p>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<p>Contact: {{property.contact}}</p>
+						<div ng-if="!user">
+							<p><a ng-href="#" ng-click="loginUser($event)">Sign in</a> to view complete details</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+			 aria-labelledby="mySmallModalLabel" id="deleteproperty">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p>Operation Status</p>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<p>Property deleted successfully</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+			 aria-labelledby="mySmallModalLabel" id="addfeatured">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p>Operation Status</p>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<p>Property has been added to featured successfully <span class="glyphicon glyphicon-ok"></span></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+			 aria-labelledby="mySmallModalLabel" id="removefeatured">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p>Operation Status</p>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<p>Property has been successfully removed from featured<span class="glyphicon glyphicon-ok"></span></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+	     aria-labelledby="mySmallModalLabel" id="addfavorite">
+	  <div class="modal-dialog modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <p>Operation Status</p>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title"></h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Property has been successfully added to your favourites<span class="glyphicon glyphicon-ok"></span></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+	     aria-labelledby="mySmallModalLabel" id="failed">
+	  <div class="modal-dialog modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <p>Operation Status</p>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title"></h4>
+	      </div>
+	      <div class="modal-body text-danger">
+	        <p>{{ failed_error }}</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>

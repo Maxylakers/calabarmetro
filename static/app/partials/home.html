@@ -1,0 +1,157 @@
+<!--HTML code for slideshow-->
+
+<div class="container">
+	<div class="slideshow-container" style="background-color:black">
+
+		<div class="mySlides fade">
+			<div class="numbertext">1 / 4</div>
+			<img src="/static/img/slide/Calabar4.jpg" alt="Calabar hand" style="width:100%">
+			<div class=" text-center text-white" style="background-color:dodgerblue;">Welcome to CalabarMetro
+			</div>
+		</div>
+
+		<div class="mySlides fade">
+			<div class="numbertext">2 / 4</div>
+			<img src="/static/img/slide/ph.jpg" alt="Calabar image" style="width:100%">
+			<div class="text-center text-white" style="background-color:dodgerblue">Your Realty solution
+			</div>
+		</div>
+
+		<div class="mySlides fade">
+			<div class="numbertext">3 / 4</div>
+			<img src="/static/img/slide/Calabar2.jpg" alt="Calabar garden" style="width:100%">
+			<div class="text-center text-white" style="background-color:dodgerblue">Upload your properties for free
+			</div>
+		</div>
+		<div class="mySlides fade">
+			<div class="numbertext">4 / 4</div>
+			<img src="/static/img/slide/Calabar3.jpg" alt="Calabar image" style="width:100%">
+			<div class="text-center text-white" style="background-color:dodgerblue">Prospective clients are searching...
+			</div>
+		</div>
+
+	</div>
+</div>
+<br>
+
+<div style="text-align:center">
+	<span class="dot"></span>
+	<span class="dot"></span>
+	<span class="dot"></span>
+	<span class="dot"></span>
+</div>
+
+<div class="container">
+	<div class="col-xs-12 col-sm-12 text-center">
+		<a ng-href="/properties/new" class="btn btn-success" style="margin-top:50px;"><span class="glyphicon glyphicon-plus"></span> Add New Property</a>
+	</div>
+</div>
+
+<!-- search engine -->
+<div class="container-fluid" style="margin-top:50px">
+	<div class="row">
+		<div class="well well-sm">
+			<div class="text-center">
+			    <div class="col-sm-2 col-sm-offset-1">
+			        <div class="form-group">
+			            <select class="form-control" ng-model="search.type" title="">
+				           	<option value="" selected="">Choose Type</option>
+							<option ng-repeat="type in propertyTypes" ng-value="type">{{ type }}</option>
+			            </select>
+			        </div>
+			    </div>
+			    <div class="col-sm-2">
+			        <div class="form-group">
+			            <select class="form-control" ng-model="search.city" title="">
+				           	<option value="" selected="">Choose City</option>
+							<option ng-repeat="(city, locations) in propertyLocations" ng-value="city">{{ city }}</option>
+			            </select>
+			        </div>
+			    </div>
+			    <div class="col-sm-2">
+			        <div class="form-group">
+			            <select ng-disabled="!search.city" class="form-control" ng-model="search.location" title="">
+							<option value="" selected>Choose Location</option>
+							<option ng-repeat="location in propertyLocations[search.city].sort()" ng-value="location">{{ location }}</option>
+			            </select>
+			        </div>
+			    </div>
+			    <div class="col-sm-3">
+			        <div class="form-group">
+			            <select class="form-control" ng-model="search.price" title="">
+				            <option value="" selected="">Choose Price Range</option>
+							<option ng-repeat="priceRange in priceRanges" ng-value="priceRange.value">{{ priceRange.text }}</option>
+			            </select>
+			        </div>
+		        </div>
+		    </div>
+			 <p class="btn btn-primary search-button" ng-click="searchProperties()">
+				 <span class="glyphicon glyphicon-search" type="button"></span>
+				 <strong>Search</strong>
+			 </p>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid" style="margin-top:50px">
+  <div class="row text-center">
+      <div class="col-md-4"> 
+        <div class="cliente"> 
+  
+          For new users, Sign up for an account or Login to an existing account. 
+          
+        </div>
+      </div>
+      <div class="col-md-4"> 
+        <div class="cliente"> 
+  
+          Add or manage your properties if you are a landlord or an agent (Handler).
+          
+        </div>
+      </div>
+      <div class="col-md-4"> 
+        <div class="cliente"> 
+  
+          Search for a property of your choice if you are a renter and contact the Handler.
+          
+        </div>
+      </div>
+  </div>
+</div>
+
+<h3 class="text-center" style="margin-top:100px; margin-bottom:50px;"><strong>Featured Properties</strong></h3>
+
+<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+<div ng-if="!finished_loading">
+	<h4 style="color: #aaaaaa">loading ...please wait a moment</h4>
+</div>
+<div ng-if="finished_loading && featured.length === 0">
+	<p style="color: #aaaaaa" class="text-center">No featured properties at the moment, please check back later.</p>
+</div>
+<div ng-if="finished_loading">
+	<div ng-repeat="feat in featured | filter: searchFor | orderBy: 'type'" class="col-sm-3 col-xs-6">
+		<a ng-href="/properties/{{feat.property._id}}" class="panel panel-default property-link" title="View property">
+			<div class="panel-heading image-wrapper">
+				<img style="max-width:100%; width:100%" ng-src="{{feat.property.src}}">
+				<div class="overlay"></div>
+			</div>
+			<div class="panel-body ">
+				<p class="single-line mb-2"><strong>{{feat.property.type}}</strong></p>
+				<p class="single-line mb-2"><strong>{{formatNaira(feat.property.price)}}</strong></p>
+				<p class="single-line mb-2"><span class="glyphicon glyphicon-globe"></span> <strong>{{feat.property.city}}</strong></p>
+				<p class="single-line mb-0"><span class="glyphicon glyphicon-map-marker "></span> <strong>{{feat.property.location}}</strong></p>
+			</div>
+			<div class="panel-footer">
+				<span><span class="badge">{{feat.property.viewCount}}</span> <span class="label label-primary">Views</span> </span>
+			</div>
+		</a>
+	</div>
+</div>
+<div style="clear: left"></div>
+<hr>
+<!-- Call us or feed us back section -->
+<div class="container">
+	<p style="padding-top:80px"><h4>We really care to know about your experience on our platform.</h4></p>
+	<img src="/static/img/social/call_us.png" alt="call us" style="width:30%;padding-bottom:30px">
+	<p><h4>Or tell us about it <a ng-href="/contact-us">here</a> </h4></p>
+</div>

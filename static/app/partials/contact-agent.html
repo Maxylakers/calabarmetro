@@ -1,0 +1,67 @@
+<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+	class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+
+<div class="form-header">
+	<h2 class="text-center" style="margin-top:70px"><strong>Contact an Agent</strong></h2>
+</div>
+<form class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+	<div class="form-field">
+		<label for="name">Name:</label>
+		<input class="form-control" required="" id="name" placeholder="Please enter your name"
+			   name="name" ng-model="new_contactagent.name" type="text" value="" autofocus/>
+		<br>
+	</div>
+	<div class="form-field">
+		<label for="location">Location:</label>
+		<input class="form-control" required="" id="location"
+			   placeholder="Please enter your location within Calabar" name="location"
+			   ng-model="new_contactagent.location" type="text" value=""/>
+	</div>
+	<br>
+	<div class="form-field">
+		<label for="message">Message:</label>
+		<textarea class="form-control" rows="7" style="width: 100%" required="" id="message"
+				  placeholder="Please describe reason for contacting Agent" name="message"
+				  ng-model="new_contactagent.message"></textarea>
+	</div>
+	<br>
+	<div class="form-field">
+		<label for="contact">Contact:</label>
+		<input class="form-control" required="" id="contact" placeholder="Please enter your contact"
+			   ng-model="new_contactagent.contact" name="contact" type="text" value=""/>
+	</div>
+	<br>
+	<div class="form-field">
+		<label for="email">Email:</label>
+		<input class="form-control" required="" id="email" placeholder="Please enter your email"
+			   ng-model="new_contactagent.email" name="email" type="email" value=""/>
+	</div>
+	<br>
+	<div class="form-actions">
+		<button class="btn btn-success" ng-click="addContactAgents(new_contactagent)" type="submit">
+			<span class="glyphicon glyphicon-send"></span> Send
+		</button>
+	</div>
+</form>
+
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+	 aria-labelledby="mySmallModalLabel" id="sendrequest">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p>Operation Status</p>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<p>Your request to contact an Agent has been sent... </p>
+				<p>We shall respond through your email: {{email}}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

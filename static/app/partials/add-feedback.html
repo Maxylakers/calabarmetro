@@ -1,0 +1,67 @@
+<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+	class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+
+<div class="form-header">
+	<h2 class="text-center" style="margin-top:70px"><strong>Contact Us</strong></h2>
+</div>
+<form class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+	<div class="form-field">
+		<label for="name">Name:</label>
+		<input class="form-control" required="" id="name" placeholder="Please enter your name"
+			   name="name" ng-model="new_feedback.name" type="text" value="" autofocus/>
+		<br>
+	</div>
+	<div class="form-field">
+		<label for="title">Title:</label>
+		<input class="form-control" required="" id="title"
+			   placeholder="Please enter title of feedback" name="title"
+			   ng-model="new_feedback.title" type="text" value=""/>
+	</div>
+	<br>
+	<div class="form-field">
+		<label for="message">Message:</label>
+		<textarea class="form-control" rows="7" style="width: 100%" required="" id="message"
+				  placeholder="Please enter your message" name="message"
+				  ng-model="new_feedback.message" rows="4"></textarea>
+	</div>
+	<br>
+	<div class="form-field">
+		<label for="contact">Contact:</label>
+		<input class="form-control" required="" id="contact" placeholder="Please enter your contact"
+			   ng-model="new_feedback.contact" name="contact" type="contact" value=""/>
+	</div>
+	<br>
+	<div class="form-field">
+		<label for="email">Email:</label>
+		<input class="form-control" required="" id="email" placeholder="Please enter your email"
+			   ng-model="new_feedback.email" name="email" type="email" value=""/>
+	</div>
+	<br>
+	<div class="form-actions">
+		<button class="btn btn-success" ng-click="addFeedback(new_feedback)" type="submit"><span
+			class="glyphicon glyphicon-send"></span> Send
+		</button>
+	</div>
+</form>
+
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+	 aria-labelledby="mySmallModalLabel" id="sendfeedback">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p>Operation Status</p>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<p>Thanks for contacting us... </p>
+				<p>We shall contact you through your email: {{email}}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

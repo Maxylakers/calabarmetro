@@ -1,0 +1,51 @@
+<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+<div ng-show="!finished_loading">
+  <h4>loading ...please wait a moment</h4>
+</div>
+<div ng-show="finished_loading"></div>
+<br>
+<br>
+
+<div ng-repeat="favourite in favourites" class="col-sm-3 col-xs-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <img style="max-width:100%; width:100%" ng-src="{{favourite.property.src}}">
+    </div>
+    <div class="panel-body">
+      <p class="single-line" style="margin-bottom:0"><strong>{{favourite.property.type}}</strong></p>
+      <strong>{{formatNaira(favourite.property.price)}}</strong>
+      <p class="single-line" style="margin-bottom:0"><span
+        class="glyphicon glyphicon-map-marker "></span> <strong>{{favourite.property.location}}</strong></p>
+    </div>
+    <div class="panel-footer">
+      <a href="#" class="btn btn-danger" onmouseenter="$(this).tooltip('show')" title="Remove from favorites"><span
+        class="glyphicon glyphicon-trash"></span></a>
+      <a href ng-href="/properties/{{favourite.property._id}}" class="btn btn-info">View Property</a>
+    </div>
+  </div>
+</div>
+<div style="clear: left"></div>
+
+<nav ng-if="total > limit" aria-label="Page navigation" class="text-center mt-5">
+  <ul class="pagination">
+    <li>
+      <a ng-if="page > 1" ng-click="getFavourites(limit, page-1)" aria-label="Previous">
+        <span aria-hidden="true">&laquo; Previous</span>
+      </a>
+      <span ng-if="page === 1" aria-hidden="true">&laquo; Previous</span>
+    </li>
+    <li ng-class="{active: page === $index+1}" ng-repeat="p in all">
+      <a ng-if="page !== $index+1" ng-click="getFavourites(limit, $index+1)">{{p+1}}</a>
+      <a ng-if="page === $index+1">{{p+1}} <span class="sr-only">(current)</span></a>
+    </li>
+    <li>
+      <a ng-if="page < pages" ng-click="getFavourites(limit, page+1)" aria-label="Next">
+        <span aria-hidden="true">Next &raquo;</span>
+      </a>
+      <span ng-if="page === pages" aria-hidden="true">Next &raquo;</span>
+    </li>
+  </ul>
+</nav>
+
+
+<!-- skipping top parts-->

@@ -1,0 +1,32 @@
+<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+<div ng-show="!finished_loading"><h4 style="=" color: #aaaaaa>
+	loading ...please wait a moment</h4></div>
+<div ng-show="finished_loading"></div>
+<div class="right-button"><a ng-click="goBack($event)" href="#"><span
+	class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></div>
+<br>
+<p>Filter list: <input ng-model="searchFor" size="30"/></p>
+
+<div ng-repeat="property in properties | filter:searchFor | orderBy: 'type'" class="col-sm-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<img style="max-width:100%; width:100%" ng-src="{{property.src}}">
+		</div>
+		<div class="panel-body">
+			<p class="single-line">{{property.type}}</p>
+			<strong>#{{property.price}}</strong>
+			<p class="single-line">Location: {{property.location}}</p>
+		</div>
+		<div class="panel-footer">
+			<a href="#" class="btn btn-success" onmouseenter="$(this).tooltip('show')" title="Add to favorites"><span
+				class="glyphicon glyphicon-heart"></span></a>
+			<a href ng-href="/properties/{{property._id}}" class="btn btn-info"> View Property</a>
+		</div>
+	</div>
+</div>
+<div style="clear: left"></div>
+
+<p>There are {{properties.length}} property so far!</p>
+
+
+<!-- skipping top parts-->

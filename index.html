@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html ng-app="propertyApp" ng-cloak ng-controller="propertyAppController as appCtrl">
+<head>
+  <title>CalabarMetro | connects property owners and customers</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="copyright" content="CalabarMetro is a registered trademark of Paraklate Inc." />
+  <meta name="description" content="CalabarMetro connects property owners and customers" />
+  <meta name="keywords" content="Calabar, Metro, Property, Sales, Rent, Land, Surveyors, Contractors" />
+  <meta name="google-site-verification" content="7t3bhNu1XnU8Ro0KcwjlyEDYaSN7vlG5E-JHJ9GgPHI" />
+  <meta property="og:url" content="https://www.calabarmetro.com" />
+  <meta property="og:type" content="business.business" />
+  <meta property="og:title" content="CalabarMetro" />
+  <meta property="og:description" content="CalabarMetro connects property owners and customers" />
+  <meta property="og:image" content="https://www.calabarmetro.com/static/img/favicon/android-icon-192x192.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@MetroCalabar" />
+  <meta name="twitter:title" content="CalabarMetro" />
+  <meta name="twitter:description" content="CalabarMetro connects property owners and customers" />
+  <meta name="twitter:image:src" content="https://www.calabarmetro.com/static/img/favicon/android-icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/static/img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/static/img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/static/img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/static/img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/static/img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/static/img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/static/img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/static/img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+        href="/static/img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/static/img/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <style type="text/css">
+    [ng-cloak] {
+      display: none;
+    }
+  </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-20093865-5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-20093865-5');
+  </script>
+
+</head>
+<body>
+
+
+<nav ng-controller="navbarController" class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target="#propertyApp-navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href ng-href="/">
+        <img src="/static/img/CalabarMetrologo.png" alt="CalabarMetro logo">
+      </a>
+    </div>
+    <!-- Collect the nav links, forms and other content for -->
+    <div class="collapse navbar-collapse" id="propertyApp-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li ng-repeat="menu in menus" ng-if="(menu.position == 1)"
+            ng-class="{active: menu.active}">
+          <a ng-href="{{menu.url}}" ng-click="selectMenu($index)"><span
+            class="glyphicon {{menu.icon}}"></span><strong> {{menu.name}}</strong></a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-if="isLoggedIn" class="dropdown" ng-class="{active: menu.active}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+             aria-haspopup="true" aria-expanded="false"><strong>My Account </strong><span
+            class="caret"></span></a>
+
+          <ul ng-if="(user.role != 0)" class="dropdown-menu">
+            <li><a ng-href="/my-account"><span class="glyphicon glyphicon-tent"></span> My Tent</a>
+            </li>
+            <li><a ng-href="/my-account/favourites"><span class="glyphicon glyphicon-heart"></span>
+              My Favourites</a></li>
+            <li><a ng-href="/my-account/properties"><span class="glyphicon glyphicon-flag"></span> My
+              Properties</a></li>
+            <li><a ng-href="/properties/new"><span class="glyphicon glyphicon-plus"></span>
+              Add New Property</a></li>
+          </ul>
+          <ul ng-if="(user.role == 0)" class="dropdown-menu">
+            <li><a ng-href="/my-account/head"> <span class="glyphicon glyphicon-tent"></span> My Tent</a></li>
+            <li><a href ng-href="/my-account/head/feedbacks">User Feedback</a></li>
+            <li><a href ng-href="/my-account/head/contact-requests">Contact requests</a></li>
+            <li><a href ng-href="/my-account/head/users">All Users</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href ng-href="/my-account/properties">My Properties</a></li>
+            <li><a ng-href="/my-account/favourites"><span class="glyphicon glyphicon-heart"></span>
+              My Favourites</a></li>
+            <li><a href ng-href="/properties/new">Add New Property</a></li>
+          </ul>
+        </li>
+        <li ng-repeat="menu in menus"
+            ng-if="(menu.restricted == isLoggedIn) && (menu.position == 2)"
+            ng-class="{active: menu.active}">
+          <a ng-href="{{menu.url}}" ng-click="selectMenu($index)"><span
+            class="glyphicon {{menu.icon}}"></span><strong> {{menu.name}}</strong></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="nav-info">
+    <div class="container">
+      <span class="phone"><span class="glyphicon glyphicon-phone"></span> +2348100510047</span>
+      <span class="phone" style="margin-left: 1rem;"><span
+        class="glyphicon glyphicon-envelope"></span> calabarmetro@gmail.com</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Backend code-->
+<div class="view-animate-container container" style="min-height: 90%">
+  <div ng-if="!loading" style="margin-top:50px" id="content" ng-view class="view-animate row"></div>
+</div>
+
+
+<footer class="footer" style=" border-top: 3px solid #f60;">
+  <div class="container py-4">
+    <div class="row">
+      <div class="footer-info col-xs-6 col-sm-4">
+        <h4><a href="#" ng-href="#">Our Services</a></h4>
+        <ul class="list-unstyled">
+          <li><a href="#" ng-href="#">Property Rental & Sales</a></li>
+          <li><a href="#" ng-href="#">Call for an Estate Surveyor & valuer</a></li>
+          <li><a href="#" ng-href="#">Call for a Land Surveyor</a></li>
+          <li><a href="#" ng-href="#">Call for a Quantity Surveyor</a></li>
+          <li><a href="#" ng-href="#">Call for an Architect</a></li>
+          <li><a href="#" ng-href="#">Call for a Town Planner</a></li>
+          <li><a href="#" ng-href="#">Call for a Building Engineer</a></li>
+          <li><a href="#" ng-href="#">Call for a 3D Designer</a></li>
+        </ul>
+      </div>
+      <div class="footer-info col-xs-6 col-sm-4">
+        <h4><a href="/about" ng-href="/about">About Us</a></h4>
+        <ul class="list-unstyled">
+          <li><a href="/our-people" ng-href="/our-people">Our People</a></li>
+          <li><a href="/events" ng-href="/events">Events</a></li>
+          <li><a href="/contact-us" ng-href="/contact-us">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-social col-xs-12 col-sm-4 text-sm-right">
+        <h4 style="color: #ffffffc2;">Connect</h4>
+        <ul class="list-unstyled">
+          <li><a href="https://twitter.com/metrocalabar">Twitter <img
+            src="/static/img/social/twitter.png" width="24px"></a></li>
+          <li><a href="mailto:calabarmetro@gmail.com">Email Us <img
+            src="/static/img/social/email.png" width="24px"></a></li>
+          <li><a href="https://facebook.com/calabarmetro">Facebook <img
+            src="/static/img/social/facebook.png" width="24px"></a></li>
+          <li><a href="https://instagram.com/calabarmetro">Instagram <img
+            src="/static/img/social/instagram.png" width="24px"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-official">
+    <div class="container">
+      <div class="row">
+        <ul class="list-unstyled list-inline text-center">
+          <li><a href ng-href="/terms">Terms and Conditions</a></li>
+          <li><a href ng-href="/privacy-policy">Privacy Policy</a></li>
+          <br>
+          <hr>
+          <li style="color:white">&copy; 2018 CalabarMetro. All rights reserved. Powered by
+            Paraklate Inc.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- SSL trust mark -->
+  <script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>
+</footer>
+</body>
+
+</html>

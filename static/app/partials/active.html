@@ -1,0 +1,28 @@
+<div class="alert alert-danger" ng-show="page_load_error">{{page_load_error}}</div>
+<div ng-show="!finished_loading"><h4 style="=" color: #aaaaaa>
+	loading ...please wait a moment</h4></div>
+<div ng-show="finished_loading"></div>
+<div class="right-button"><a href ng-href="/renter">Back </a></div>
+<br>
+<p>Filter list: <input ng-model="searchFor" size="30"/></p>
+
+<div ng-repeat="property in properties | filter:searchFor | orderBy: 'type'" class="col-sm-4">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<img style="max-width:100%; width:100% " ng-src="{{property.src}}">
+		</div>
+		<div class="panel-body">
+			{{property.type}} <strong>(#{{property.price}})</strong> <br>
+			Location: {{property.location}}
+			<br><br>
+			<p><a href ng-href="/properties/{{property._id}}">
+				<button ng-click="" type="button" class="btn btn-info"> View Property</button>
+			</a>
+				<a href ng-href="/properties/{{property._id}}">
+					<button ng-click="" type="button" class="btn btn-warning"> Deactivate</button>
+				</a></p>
+		</div>
+	</div>
+	<div style="clear: left"></div>
+
+	<p>You have {{properties.length}} Favourite properties so far!</p>

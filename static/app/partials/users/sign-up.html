@@ -1,0 +1,101 @@
+<style type="text/css">
+	span.req {
+		color: maroon;
+		font-size: 112%;
+	}</style>
+<div class="col-sm-6 col-sm-offset-3" style="margin-top:50px">
+	<form role="form" id="form-wrapper">
+		<h1><strong>Sign Up For An Account</strong></h1>
+		<div class="alert alert-danger"
+			 ng-show="add_user_error" role="alert">{{add_user_error}}
+		</div>
+		<br>
+		<fieldset>
+			<legend class="text-center">Valid information is required to sign up. <span class="req"><small> required *</small></span>
+			</legend>
+
+			<div class="form-group" ng-class="{'has-error': errors.firstName}">
+				<label class="control-label" for="firstName"><span class="req">* </span> First name:
+				</label>
+				<input class="form-control" type="text" id="firstName"
+					   placeholder="Enter your first name" ng-model="new_user.firstName" ng-disabled="loading" autofocus>
+				<p class="control-feedback my-3" ng-if="errors.firstName"
+				   ng-bind="errors.firstName"></p>
+
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': errors.lastName}">
+				<label class="control-label" for="lastName"><span class="req">* </span> Last name:
+				</label>
+				<input class="form-control" type="text" id="lastName"
+					   placeholder="Enter your last name" ng-model="new_user.lastName" ng-disabled="loading">
+				<p class="control-feedback my-3" ng-if="errors.lastName"
+				   ng-bind="errors.lastName"></p>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': errors.email}" id="email-wrapper">
+				<label class="control-label" for="email"><span class="req">* </span> Email Address:
+				</label>
+				<input class="form-control" type="email" id="email"
+					   placeholder="Please enter a valid email" ng-model="new_user.email" ng-disabled="loading">
+				<p class="control-feedback my-3" ng-if="errors.email" ng-bind="errors.email"></p>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': errors.password}" id="password-wrapper">
+				<label class="control-label" for="password"><span class="req">* </span> Password:
+				</label>
+				<input required="" id="password" type="password" class="form-control"
+					   placeholder="Enter a password not less than 6 characters" minlength="4"
+					   maxlength="16" ng-model="new_user.password" ng-disabled="loading">
+				<p class="control-feedback my-3" ng-if="errors.password"
+				   ng-bind="errors.password"></p>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': errors.password2}">
+				<label class="control-label" for="password2"><span class="req">* </span> Confirm Password: </label>
+				<input required="" ng-model="new_user.password2" ng-disabled="loading" id="password2" type="password"
+					   class="form-control inputpass" minlength="4" maxlength="16"
+					   placeholder="Enter password confirmation" />
+				<span id="confirmMessage" class="confirmMessage"></span>
+				<p class="control-feedback my-3" ng-if="errors.password2"
+				   ng-bind="errors.password2"></p>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': errors.phoneNumber}" id="phone-wrapper">
+				<label class="control-label" for="phoneNumber"><span class="req">* </span> Phone
+					Number: </label>
+				<input required="" type="text" id="phoneNumber"
+					   class="form-control phone" placeholder="Enter your telephone number"
+					   ng-model="new_user.phoneNumber" ng-disabled="loading">
+				<p class="control-feedback my-3" ng-if="errors.phoneNumber"
+				   ng-bind="errors.phoneNumber"></p>
+			</div>
+
+			<div class="form-group">
+				<input id="signUp" data-loading-text="Processing..." ng-click="addUser()" class="btn btn-primary" type="submit" name="signup" value="Sign Up">
+			</div>
+			<p class="form-group">Already have an account? <a href ng-href="/login">Login</a></p>
+		</fieldset>
+	</form>
+</div>
+
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+	 aria-labelledby="mySmallModalLabel" id="signupUser">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p>Operation Status</p>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<p>{{message}}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

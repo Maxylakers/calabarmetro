@@ -1,0 +1,55 @@
+.property {
+	width: 250px;
+	min-height: 150px;
+	float: left;
+	margin: 10px;
+}
+
+.property-editor textarea {
+	border-color: #dddddd;
+}
+
+.smaller {
+	font-size: 15pt;
+}
+
+.lighter {
+	color: #aaaaaa;
+}
+
+.right-button {
+	float: right;
+	padding: 10px;
+	font-size: 125%;
+}
+
+.image-wrapper {
+	position: relative;
+	height: 150px;
+	overflow: hidden;
+	padding: 0;
+}
+
+.property-link{
+	display: block;
+	position: relative;
+}
+
+.property-link .overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0);
+	transition: background 250ms linear;
+}
+
+.property-link:hover, .property-link:focus {
+	box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+	text-decoration: none;
+}
+
+.property-link:hover .overlay {
+	background: rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,10 @@
+<div id="login-wrapper" class="col-sm-4 col-sm-offset-4" style="margin-top:50px" ng-init="verifyEmail()">
+	<h1><strong>Account verification</strong></h1><br><br>
+	<p ng-show="loading">Verifying your email address...</p>
+	<div class="alert alert-success"
+		 ng-show="verification_success" role="alert">Email verified successfully, You can now <a ng-href="/login" class="alert-link">Login</a>
+	</div>
+	<div class="alert alert-danger"
+		 ng-show="verification_error" role="alert">{{verification_error}}
+	</div>
+</div>

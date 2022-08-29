@@ -1,0 +1,51 @@
+<div class="container text-center">
+    <img src="/static/img/CalabarMetrologo.png" />
+    <h1><strong>CONTENT NOT FOUND</strong></h1> 
+    <p>Sorry, the content you're looking for was not found, go to <a ng-href="/">Homepage</a> or search for properties</p>
+
+<!-- search engine -->
+<div class="container-fluid" style="margin-top:50px">
+        <div class="row">
+            <div class="well well-sm">
+                <div class="text-center">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="search.type" title="">
+                                   <option value="" selected="">Choose Type</option>
+                                <option ng-repeat="type in propertyTypes" ng-value="type">{{ type }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="search.city" title="">
+                                   <option value="" selected="">Choose City</option>
+                                <option ng-repeat="(city, locations) in propertyLocations" ng-value="city">{{ city }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <select ng-disabled="!search.city" class="form-control" ng-model="search.location" title="">
+                                <option value="" selected>Choose Location</option>
+                                <option ng-repeat="location in propertyLocations[search.city].sort()" ng-value="location">{{ location }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <select class="form-control" ng-model="search.price" title="">
+                                <option value="" selected="">Choose Price Range</option>
+                                <option ng-repeat="priceRange in priceRanges" ng-value="priceRange.value">{{ priceRange.text }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                 <p class="btn btn-primary search-button" ng-click="searchProperties()">
+                     <span class="glyphicon glyphicon-search" type="button"></span>
+                     <strong>Search</strong>
+                 </p>
+            </div>
+        </div>
+    </div>
+</div>
